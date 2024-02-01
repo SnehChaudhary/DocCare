@@ -10,7 +10,8 @@ const patientSchema = mongoose.Schema({
     weight: String,
     bloodGroup: String,
     birthDate: Date,
-    photo: String
+    photo: String,
+    password: String,
 });
 
 const Patient = mongoose.model('patients',patientSchema);

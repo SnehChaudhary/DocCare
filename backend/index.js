@@ -1,16 +1,15 @@
 const express = require('express')
-const db = require('./db')
+const connectToMongo  = require('./db')
 const {Hospital} = require('./model/hospital')
 const {Doctor} = require('./model/doctor')
-
 const {Record} = require('./model/record');
-const app = express()
+const patient = require('./route/patient');
+const app = express();
 
-db()
+app.use(express.json());
 
-Hospital.find({}).then((res)=>{console.log(res)})
-    // db().catch((error)=>{console.log("Hello")})
+connectToMongo();
 
-Record.find().then((res)=>{console.log(res)})
+app.use('/patient',patient);
 
-app.listen(5000, () => { console.log("Connected to backend")})
+app.listen(5000, () => { console.log("Connected to backend")})  
