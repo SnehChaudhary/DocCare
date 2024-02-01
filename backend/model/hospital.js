@@ -11,7 +11,10 @@ const hospitalData = mongoose.Schema({
     },
     contact : String,
     totalPatient : Number,
-    photo : String
+    photo : String,
+    verified: {type: Boolean,default: false},
+    secKey: String,
+    password: String,
 })
 
 const Hospital = mongoose.model('hospital',hospitalData)

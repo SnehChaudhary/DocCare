@@ -30,7 +30,7 @@ router.post("/signup", [
 
     const salt = await bcryptjs.genSalt(10);
 
-    const hashedPassword = bcryptjs.hashSync(password,salt);
+    const hashedPassword = await bcryptjs.hash(password,salt);
 
     Patient.create({ 
         name,contact,gender,emailId,address,height,weight,bloodGroup,birthDate,photo,password: hashedPassword
