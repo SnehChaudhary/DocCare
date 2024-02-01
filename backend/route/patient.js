@@ -16,7 +16,7 @@ router.post("/signup", [
     body('weight',"Enter weight in kg").not().isEmpty(),
     body('bloodGroup',"Enter valid Blood Group").not().isEmpty(),
     body('birthDate',"Enter valid Birth date").isDate(),
-    body('password',"Password should be of minimum length 8").isLength({min : 8}),
+    body('password',"Password should be of minimum length 8").isLength({min : 8})
 
 ] ,async (req,res)=>{
 
