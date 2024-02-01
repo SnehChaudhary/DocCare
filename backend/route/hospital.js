@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcryptjs = require('bcryptjs');
 const router = express.Router();
 const {body,validationResult} = require('express-validator');
+
 const SECRET_KEY = "thisisdoccare";
 
 router.post("/signup",[

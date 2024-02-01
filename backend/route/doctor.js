@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Doctor = require('../model/doctor');
+const Hospital = require('../model/hospital');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {body,validationResult} = require('express-validator');
@@ -18,7 +19,7 @@ router.post('/signup', [
     body('dateOfJoin', 'Enter valid date').isDate(),
     body('password',"Password should be of minimum length 8").isLength({min : 8}),
     body('secKey', 'Secret Key is wrong').isLength(7)
-    
+
 ], async (req,res) => {
 
     const result = validationResult(req);
@@ -30,10 +31,13 @@ router.post('/signup', [
 
     const {id, name, contact, speciality, birthDate, gender, experience, dateOfJoin, password, secKey} = req.body;
 
+    const hospital = await Hospital.findOne({secKey});
+    const hospitalId = hospital._id;
+
     const salt = await bcryptjs.genSalt(11);
     const hashPassword = await bcryptjs.hash(password,salt);
 
-    Doctor.create({id, name, contact, speciality, birthDate, gender, experience, dateOfJoin, password : hashPassword})
+    Doctor.create({hospital : hospitalId, id, name, contact, speciality, birthDate, gender, experience, dateOfJoin, password : hashPassword})
     .then(()=>{ 
         res.json({msg : "Your account will be activated once your hospital accepts it !!"});
     })
