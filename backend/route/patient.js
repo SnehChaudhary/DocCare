@@ -53,6 +53,10 @@ router.get("/signin", [
 
     const patient = await Patient.findOne({emailId});
 
+    if(patient == null){
+        return res.json({msg: "Enter valid credentials!"})
+    }
+
     if(!bcryptjs.compare(patient.password,password)) {
         return res.json({msg: "Enter valid credtetial!"});
     }

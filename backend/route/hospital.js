@@ -1,10 +1,11 @@
 const express = require('express');
-const {Hospital} = require('../model/hospital')
+const Hospital = require('../model/hospital')
+const Doctor = require('../model/doctor')
 const jwt = require("jsonwebtoken");
 const bcryptjs = require('bcryptjs');
 const router = express.Router();
 const {body,validationResult} = require('express-validator');
-
+const fetchUser = require('../middleware/fetchUser');
 const SECRET_KEY = "thisisdoccare";
 
 router.post("/signup",[
@@ -67,6 +68,18 @@ router.get("/signin",[
     const token = jwt.sign({secKey},SECRET_KEY);
 
     res.json({token});
+})
+
+router.get('/alldoctor',fetchUser,async (req,res)=>{
+    const key = jwt.decode(req.headers.token).secKey;
+
+    const hospital = await Hospital.findOne({secKey: key});
+
+    //console.log(hospital);
+
+   const doctors = await Doctor.find({hospital: hospital._id});
+
+    res.json({doctors});
 })
 
 module.exports = router;

@@ -6,7 +6,7 @@ const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {body,validationResult} = require('express-validator');
 
-const SECRET_KEY = "doctorisdoctor";
+const SECRET_KEY = "thisisdoccare";
 
 router.post('/signup', [
     body('id', 'Enter valid id').isLength(10),
