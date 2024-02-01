@@ -9,9 +9,11 @@ const doctorData = mongoose.Schema({
     birthDate : Date,
     gender : String,
     experience : Number,
-    dateOfJoin : Date
+    dateOfJoin : Date,
+    password : String,
+    verified : {type : Boolean, default : false}
 })
 
 const Doctor = mongoose.model('doctor', doctorData)
 
-module.exports = {Doctor}
+module.exports = Doctor
