@@ -5,6 +5,9 @@ const Hospital = require('../model/hospital');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {body,validationResult} = require('express-validator');
+const fetchUser = require('../middleware/fetchUser');
+const Patient = require('../model/patient');
+const Record = require('../model/record');
 
 const SECRET_KEY = "thisisdoccare";
 
@@ -77,6 +80,46 @@ router.get('/signin', [
     const token = jwt.sign(id, SECRET_KEY);
 
     res.json({token : token});
+})
+
+router.get('/allrecord',fetchUser,[
+    body("emailId","Enter a valid email.").isEmail()
+],async (req,res)=>{
+
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+        return res.send({ errors: result.array() });
+    }
+
+    const emailId = req.body.emailId;
+
+    const patientId = await Patient.findOne({emailId});
+
+    if(patientId == null){
+        res.send("Enter a valid patient email id.");
+    }
+
+    const records = await Record.find({patientId: patientId._id});
+
+    res.json({records});
+})
+
+router.put('/verified',fetchUser,async (req,res)=>{
+    const {id} = req.body;
+
+    await Doctor.updateOne({id},{verified: true});
+
+    res.send("Doctor is verified successfully!!");
+})
+
+router.get("/getDetail",fetchUser,async (req,res)=>{
+    const doctor = jwt.decode(req.headers.token);
+
+    const doctorId = doctor;
+
+    const doctorDetails = await Doctor.findOne({id: doctorId});
+
+    res.json(doctorDetails);
 })
 
 module.exports = router;

@@ -1,10 +1,12 @@
 const express = require('express');
-const {Patient} = require('../model/patient');
+const Patient = require('../model/patient');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require("bcryptjs");
 const router = express.Router();
 const SECRET_KEY = "thisisdoccare";
 const {body, validationResult} = require("express-validator");
+const fetchUser = require('../middleware/fetchUser');
+const Record = require('../model/record');
 
 router.post("/signup", [
     body('name',"Name should be of minimum length 3").isLength({min : 3}),
@@ -64,6 +66,26 @@ router.get("/signin", [
     const token = jwt.sign({emailId},SECRET_KEY);
 
     res.json({token});
+})
+
+router.get('/record',fetchUser,async (req,res)=>{
+    const patientId = jwt.decode(req.headers.token);
+    
+    const patient = await Patient.findOne({emailId: patientId.emailId});
+
+    const records = await Record.find({patientId: patient._id});
+
+    res.json({records});
+})
+
+router.get("/getDetail",fetchUser,async (req,res)=>{
+    const patient = jwt.decode(req.headers.token);
+
+    const patientId = patient.emailId;
+
+    const patiendDetails = await Patient.findOne({emailId: patientId});
+
+    res.json(patiendDetails);
 })
 
 module.exports = router;
