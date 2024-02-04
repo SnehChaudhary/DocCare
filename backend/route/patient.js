@@ -88,4 +88,29 @@ router.get("/getDetail",fetchUser,async (req,res)=>{
     res.json(patiendDetails);
 })
 
+router.put('/updateDetail', fetchUser, [
+    body('contact',"Enter valid contact number").isLength(10),
+    body('height',"Enter height in cm").not().isEmpty(),
+    body('address',"Enter valid address").isLength({min : 5}),
+    body('weight',"Enter weight in kg").not().isEmpty(),
+], async (req, res) => {
+
+    const err = validationResult(req);
+
+    if(!err.isEmpty())
+    {
+        return res.json({errors : err.array()});
+    }
+
+    const {contact, address, height, weight} = req.body;
+    const {token} = req.headers;
+
+    const pat = jwt.decode(token);
+    const email = pat.emailId;
+
+    const updatedPatient = await Patient.findOneAndUpdate({emailId : email}, {contact, address, height, weight});
+
+    res.json({msg : "Patient details Updated !!"});
+})
+
 module.exports = router;
