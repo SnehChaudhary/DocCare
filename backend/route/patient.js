@@ -7,6 +7,7 @@ const SECRET_KEY = "thisisdoccare";
 const {body, validationResult} = require("express-validator");
 const fetchUser = require('../middleware/fetchUser');
 const Record = require('../model/record');
+const Appointment = require('../model/appointment');
 
 router.post("/signup", [
     body('name',"Name should be of minimum length 3").isLength({min : 3}),
@@ -111,6 +112,21 @@ router.put('/updateDetail', fetchUser, [
     const updatedPatient = await Patient.findOneAndUpdate({emailId : email}, {contact, address, height, weight});
 
     res.json({msg : "Patient details Updated !!"});
+})
+
+router.get('/pendingAppointment', fetchUser, async (req,res) => {
+
+    const {token} = req.headers;
+
+    const email = jwt.verify(token, SECRET_KEY).emailId;
+
+    const patient = await Patient.findOne({emailId : email});
+
+    const patId = patient._id;
+
+    const appointment = await Appointment.find({patientId : patId, status : false});
+
+    res.json({appointment});
 })
 
 module.exports = router;
