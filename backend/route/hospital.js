@@ -82,4 +82,23 @@ router.get('/alldoctor',fetchUser,async (req,res)=>{
     res.json({doctors});
 })
 
+router.put('/verify', fetchUser, async (req, res)=> {
+    const {secKey} = req.body;
+
+    const updated = await Hospital.findOneAndUpdate({secKey},{verified : true});
+
+    res.json({msg : "Hospital Verified"});
+})
+
+router.get('/getDetail', fetchUser, async (req,res) => {
+
+    const {token} = req.headers;
+
+    const sec = jwt.decode(token).secKey;
+
+    const hospital = await Hospital.findOne({secKey : sec});
+
+    res.json({hospital});
+})
+
 module.exports = router;

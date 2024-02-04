@@ -1,10 +1,11 @@
 const express = require('express');
-const {Patient} = require('../model/patient');
+const Patient = require('../model/patient');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require("bcryptjs");
 const router = express.Router();
 const SECRET_KEY = "thisisdoccare";
 const {body, validationResult} = require("express-validator");
+const fetchUser = require('../middleware/fetchUser');
 
 router.post("/signup", [
     body('name',"Name should be of minimum length 3").isLength({min : 3}),
@@ -64,6 +65,31 @@ router.get("/signin", [
     const token = jwt.sign({emailId},SECRET_KEY);
 
     res.json({token});
+})
+
+router.put('/updateDetail', fetchUser, [
+    body('contact',"Enter valid contact number").isLength(10),
+    body('height',"Enter height in cm").not().isEmpty(),
+    body('address',"Enter valid address").isLength({min : 5}),
+    body('weight',"Enter weight in kg").not().isEmpty(),
+], async (req, res) => {
+
+    const err = validationResult(req);
+
+    if(!err.isEmpty())
+    {
+        return res.json({errors : err.array()});
+    }
+
+    const {contact, address, height, weight} = req.body;
+    const {token} = req.headers;
+
+    const pat = jwt.decode(token);
+    const email = pat.emailId;
+
+    const updatedPatient = await Patient.findOneAndUpdate({emailId : email}, {contact, address, height, weight});
+
+    res.json({msg : "Patient details Updated !!"});
 })
 
 module.exports = router;
