@@ -6,6 +6,7 @@ const bcryptjs = require('bcryptjs');
 const router = express.Router();
 const {body,validationResult} = require('express-validator');
 const fetchUser = require('../middleware/fetchUser');
+const Appointment = require('../model/appointment');
 const SECRET_KEY = "thisisdoccare";
 
 router.post("/signup",[
@@ -99,6 +100,36 @@ router.get('/getDetail', fetchUser, async (req,res) => {
     const hospital = await Hospital.findOne({secKey : sec});
 
     res.json({hospital});
+})
+
+router.get('/pendingAppointment', fetchUser, async (req,res) => {
+
+    const {token} = req.headers;
+
+    const sec = jwt.verify(token, SECRET_KEY).secKey;
+
+    const hospital = await Hospital.findOne({secKey : sec});
+
+    const hosId = hospital._id;
+
+    const appointment = await Appointment.find({hospitalId : hosId, status : false});
+
+    res.json({appointment});
+})
+
+router.get('/getAllAppointment', fetchUser, async (req,res) => {
+
+    const {token} = req.headers;
+
+    const sec = jwt.verify(token, SECRET_KEY).secKey;
+
+    const hospital = await Hospital.findOne({secKey : sec});
+
+    const hosId = hospital._id;
+
+    const appointment = await Appointment.find({hospitalId : hosId, status : true});
+
+    res.json({appointment});
 })
 
 module.exports = router;
