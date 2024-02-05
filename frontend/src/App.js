@@ -1,8 +1,9 @@
+import Signup from './components/Signup.js';
 
 function App() {
   return (
-    <div className="App">
-      React App
+    <div>
+      <Signup />
     </div>
   );
 }
