@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <div>
       This is home.
-      {name.id}
+      {name}
     </div>
   )
 }

@@ -2,18 +2,10 @@ import ContextAPI  from "./ContextAPI";
 
 const ContextProps = (props) => {
 
-    console.log(props);
-
-    const name = {
-        id: "Khanjan"
-    };
-
-    // const get = () => {
-    //     console.log("hei");
-    // }
+    // const 
 
     return (
-        <ContextAPI.Provider value={{name}} >
+        <ContextAPI.Provider value={0} >
         {props.children}
         </ContextAPI.Provider>
     )
