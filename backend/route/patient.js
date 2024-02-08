@@ -42,7 +42,7 @@ router.post("/signup", [
     })
 })
 
-router.get("/signin", [
+router.post("/signin", [
     body('emailId',"Enter valid email").isEmail(),
     body('password',"Password should be of minimum length 8").isLength({min : 8})
 ], async (req,res)=>{

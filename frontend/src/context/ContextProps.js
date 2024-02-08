@@ -2,10 +2,26 @@ import ContextAPI  from "./ContextAPI";
 
 const ContextProps = (props) => {
 
-    // const 
+    const patientLogin = async (patientDetails)=>{
+
+        const response = await fetch("http://localhost:5000/patient/signin",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailId: patientDetails.emailId,
+                password: patientDetails.password
+            })
+        });
+
+        const details = await response.json();
+
+        console.log(details);
+    }
 
     return (
-        <ContextAPI.Provider value={0} >
+        <ContextAPI.Provider value={{patientLogin}} >
         {props.children}
         </ContextAPI.Provider>
     )

@@ -5,8 +5,10 @@ const hospital = require('./route/hospital');
 const doctor = require('./route/doctor');
 const record = require('./route/record');
 const appointment = require('./route/appointment')
+var cors = require('cors');
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 connectToMongo();
