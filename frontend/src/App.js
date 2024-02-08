@@ -11,10 +11,12 @@ import Patientsignup from './components/Patientsignup';
 import Hospitallogin from './components/Hospitallogin';
 import Doctorlogin from './components/Doctorlogin';
 import Patientlogin from './components/Patientlogin';
+import ContextProps from './context/ContextProps';
 
 function App() {
   return (
-    <div>
+    <>
+    <ContextProps>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -31,7 +33,8 @@ function App() {
           <Route path='/login/patient' element={<Patientlogin />} />
         </Routes>
       </BrowserRouter>
-    </div>
+      </ContextProps>
+    </>
   );
 }
 
