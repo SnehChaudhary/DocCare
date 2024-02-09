@@ -6,12 +6,12 @@ import Home from './components/Home';
 import About from './components/About';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import Hospitalsignup from './components/Hospitalsignup';
+import Hospitalsignup from './components/HospitalSignup';
 import Doctorsignup from './components/Doctorsignup';
 import Patientsignup from './components/Patientsignup';
 import Hospitallogin from './components/HospitalLogin';
 import Doctorlogin from './components/Doctorlogin';
-import Patientlogin from './components/Patientlogin';
+import Patientlogin from './components/PatientLogin';
 import ContextProps from './context/ContextProps';
 
 function App() {

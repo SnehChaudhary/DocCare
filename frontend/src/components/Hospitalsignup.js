@@ -38,7 +38,6 @@ const Hospitalsignup = () => {
       })
     }
   }
-
   return (
     <div className='container my-3 fw-bold'>
     <form>
