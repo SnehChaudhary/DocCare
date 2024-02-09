@@ -56,17 +56,19 @@ router.post("/signin", [
 
     const patient = await Patient.findOne({emailId});
 
-    if(patient == null){
+    if(!patient){
         return res.json({msg: "Enter valid credentials!"})
-    }
+    } 
 
-    if(!bcryptjs.compare(patient.password,password)) {
-        return res.json({msg: "Enter valid credtetial!"});
-    }
+    bcryptjs.compare(password,patient.password,(err,response)=>{
+        if(!response){
+            return res.json({msg: "Enter valid credtetial!"});
+        }
 
-    const token = jwt.sign({emailId},SECRET_KEY);
+        const token = jwt.sign({emailId},SECRET_KEY);
 
-    res.json({token});
+        return res.json({msg:"Login Success",token: token});
+    })
 })
 
 router.get('/record',fetchUser,async (req,res)=>{

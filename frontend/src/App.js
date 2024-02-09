@@ -1,5 +1,6 @@
 import React from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast'
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import About from './components/About';
@@ -8,7 +9,7 @@ import Signup from './components/Signup';
 import Hospitalsignup from './components/Hospitalsignup';
 import Doctorsignup from './components/Doctorsignup';
 import Patientsignup from './components/Patientsignup';
-import Hospitallogin from './components/Hospitallogin';
+import Hospitallogin from './components/HospitalLogin';
 import Doctorlogin from './components/Doctorlogin';
 import Patientlogin from './components/Patientlogin';
 import ContextProps from './context/ContextProps';
@@ -17,6 +18,7 @@ function App() {
   return (
     <>
     <ContextProps>
+    <Toaster />
       <BrowserRouter>
         <Navbar />
         <Routes>

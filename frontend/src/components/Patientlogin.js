@@ -1,7 +1,11 @@
 import React, { useContext, useState } from 'react'
 import contextAPI from '../context/ContextAPI';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Patientlogin = () => {
+
+  const navigate = useNavigate();
 
   const [patientDetail,setPatientDetail] = useState({
     emailId : "",
@@ -10,19 +14,20 @@ const Patientlogin = () => {
 
   const {patientLogin} = useContext(contextAPI);
 
-  const onchange = (e) => {
+  const onChange = (e) => {
     setPatientDetail({...patientDetail,[e.target.name] : e.target.value})
   }
 
-  const updateDetail = (e) => {
+  const updateDetail = async (e) => {
     e.preventDefault();
-    patientLogin(patientDetail);
-    // const emailId = document.getElementById('emailID');
-    // const password = document.getElementById('password');
+    const response = await patientLogin(patientDetail);
 
-    // setPatientDetail({emailId,password});
-
-    // console.log(patientLogin(patientDetail));
+    if(response.success){
+      toast.success(response.msg);
+      navigate('/');
+    }else if(!response.success){
+      toast.error(response.msg);
+    }
   }
 
   return (
@@ -30,11 +35,11 @@ const Patientlogin = () => {
       <form>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-          <input type="email" style={{width: "50%"}} className="form-control" onChange={onchange} name="emailId" value={patientDetail.emailId} id="emailID" aria-describedby="emailHelp" />
+          <input type="email" style={{width: "50%"}} className="form-control" onChange={onChange} name="emailId" value={patientDetail.emailId} />
           </div>
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-          <input type="password" style={{width: "50%"}} className="form-control" onChange={onchange} name="password" value={patientDetail.password} id="password" />
+          <input type="password" style={{width: "50%"}} className="form-control" onChange={onChange} name="password" value={patientDetail.password}qw/>
         </div>
         <button type="submit" className="btn btn-primary" onClick={updateDetail}>Submit</button>
       </form>

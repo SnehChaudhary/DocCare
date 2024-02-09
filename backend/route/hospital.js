@@ -41,7 +41,7 @@ router.post("/signup",[
     })
 })
 
-router.get("/signin",[
+router.post("/signin",[
     body('secKey',"Enter a valid secret key.").isLength({min: 7}),
     body('password',"Enter a valid password.").isLength({min: 8})
 ],async (req,res)=>{
@@ -58,17 +58,19 @@ router.get("/signin",[
         return res.json({msg: "Enter valid cretendials"});
     }
 
-    if(!bcryptjs.compare(hospital.password,password)){
-        return res.json({msg: "Enter the valid cretendials."})
-    }
+    bcryptjs.compare(password,hospital.password,(err,response)=>{
+        if(!response){
+            return res.json({msg: "Enter the valid cretendials."})
+        }
 
-    if(!hospital.verified){
-        return res.json({msg: "Your details are not verified yet!!"});
-    }
-
-    const token = jwt.sign({secKey},SECRET_KEY);
-
-    res.json({token});
+        if(!hospital.verified){
+            return res.json({msg: "Your details are not verified yet!!"});
+        }
+    
+        const token = jwt.sign({secKey},SECRET_KEY);
+    
+        res.json({msg: "Login Success!",token: token});
+    })
 })
 
 router.get('/alldoctor',fetchUser,async (req,res)=>{
