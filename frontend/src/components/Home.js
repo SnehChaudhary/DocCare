@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import contextAPI from '../context/ContextAPI';
+import React from 'react'
 
 const Home = () => {
   return (
