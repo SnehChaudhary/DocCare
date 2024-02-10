@@ -134,4 +134,10 @@ router.get('/getAllAppointment', fetchUser, async (req,res) => {
     res.json({appointment});
 })
 
+router.get('/allHospital',async (req,res)=>{
+    const hospitals = await Hospital.find({});
+
+    res.json({hospitals});
+})
+
 module.exports = router;

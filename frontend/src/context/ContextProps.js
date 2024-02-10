@@ -50,7 +50,6 @@ const ContextProps = (props) => {
     }
 
     const hospitalSignup = async (hospitalDetails)=>{
-        console.log("Request");
 
         const response = await fetch("http://localhost:5000/hospital/signup",{
             method: "POST",
@@ -77,8 +76,18 @@ const ContextProps = (props) => {
         }
     }
 
+    const getAllHospitals = async ()=>{
+        const response = await fetch("http://localhost:5000/hospital/allHospital",{
+            method: "GET"
+        });
+
+        const details = await response.json();
+
+        return details;
+    }
+
     return (
-        <ContextAPI.Provider value={{hospitalLogin,patientLogin,hospitalSignup}} >
+        <ContextAPI.Provider value={{hospitalLogin,patientLogin,hospitalSignup,getAllHospitals}} >
         {props.children}
         </ContextAPI.Provider>
     )
