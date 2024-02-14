@@ -6,10 +6,13 @@ const Navbar = () => {
 
   const context = useContext(contextAPI);
 
-  const {setLogin} = context;
+  const {hospitalSuccess, doctorSuccess, patientSuccess} = context;
 
-  let ivsbl = (setLogin()) ? '' : 'd-none';
-  let vsbl = (setLogin()) ? 'd-none' : '';
+  const ivsbl1 = (localStorage.getItem("patientJWT")!==null) ? '' : 'd-none';
+  const ivsbl2 = (localStorage.getItem("doctorJWT")!==null) ? '' : 'd-none';
+  const ivsbl3 = (localStorage.getItem("hospitalJWT")!==null) ? '' : 'd-none';
+  const vsbl = (localStorage.getItem("hospitalJWT")!==null || localStorage.getItem("doctorJWT")!==null || localStorage.getItem("patientJWT")!==null) ? 'd-none' : '';
+  const ivsbl = (localStorage.getItem("hospitalJWT")!==null || localStorage.getItem("doctorJWT")!==null || localStorage.getItem("patientJWT")!==null) ? '' : 'd-none';
 
   const logout = ()=>{
     if(localStorage.getItem("patientJWT")!==null){
@@ -62,11 +65,13 @@ const Navbar = () => {
               {vsbl==='d-none' ? 'Name' : 'Login'}
             </button>
             <ul className="dropdown-menu">
-              <li><a className={`${vsbl} dropdown-item`} href="#">Login</a></li>
-              <li><a className={`${vsbl} dropdown-item`} href="#">Signup</a></li>
-              <li><a className={`${ivsbl} dropdown-item`} href="#">Profile</a></li>
-              <li><a className={`${ivsbl} dropdown-item`} href="#">Documents</a></li>
-              <li><a className={`${ivsbl} dropdown-item`} href="#" onClick={logout}>Logout</a></li>
+              <li><Link className={`${vsbl} dropdown-item`} to="/login">Login</Link></li>
+              <li><Link className={`${vsbl} dropdown-item`} to="/signup">Signup</Link></li>
+              <li><Link className={`${ivsbl1} dropdown-item`} to="/patientProfile">Profile</Link></li>
+              <li><Link className={`${ivsbl2} dropdown-item`} to="/doctorProfile">Profile</Link></li>
+              <li><Link className={`${ivsbl3} dropdown-item`} to="/hospitalProfile">Profile</Link></li>
+              <li><Link className={`${ivsbl1} dropdown-item`} to="/document">Documents</Link></li>
+              <li><Link className={`${ivsbl} dropdown-item`} to="/home" onClick={logout}>Logout</Link></li>
             </ul>
           </div>
             {/* <form className={`d-flex`} role="search">
