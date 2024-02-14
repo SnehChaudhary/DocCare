@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import contextAPI from "../context/ContextAPI";
 
 const Navbar = () => {
+
+  const context = useContext(contextAPI);
+
+  const {hospitalSuccess, doctorSuccess, patientSuccess} = context;
+
+  const vsbl = (hospitalSuccess===true || doctorSuccess===true || patientSuccess===true) ? 'invisible' : 'visible';
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -33,10 +41,16 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            <form className="d-flex" role="search">
-              <Link role="button" type="button" className="btn btn-primary mx-1" to="/login">Login</Link>
-              <Link role="button" type="button" className="btn btn-primary mx-1" to="/signup">Signup</Link>
+            <form className={`d-flex`} role="search">
+              <Link role="button" type="button" className={`${vsbl} btn btn-primary mx-1`} to="/signup">Signup</Link>
+              <Link role="button" type="button" className={`btn btn-primary mx-1`} to="/login">{(hospitalSuccess===true || doctorSuccess===true || patientSuccess===true) ? 'Logout' : 'Login'}</Link>
             </form>
+            {/* <form className={`${ivsbl} d-flex`} role="search">
+              <Link role="button" type="button" className="btn btn-primary mx-1" to="/logout">Logout</Link>
+            </form> */}
+            {/* <form className={`{(${hospitalSuccess} || ${doctorSuccess} || ${patientSuccess}) ? 'visible' : 'invisible'} d-flex`} role="search">
+              <Link role="button" type="button" className="btn btn-primary mx-1" to="/logout">Logout</Link>
+            </form> */}
           </div>
         </div>
       </nav>

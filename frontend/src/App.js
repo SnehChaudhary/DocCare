@@ -1,6 +1,6 @@
 import React from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import toast, { Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import About from './components/About';

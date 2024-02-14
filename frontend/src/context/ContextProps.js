@@ -1,6 +1,28 @@
+import { useState } from "react";
 import ContextAPI  from "./ContextAPI";
 
 const ContextProps = (props) => {
+
+    const [patientSuccess,setPatientSuccess] = useState(false);
+    const [doctorSuccess,setDoctorSuccess] = useState(false);
+    const [hospitalSuccess,setHospitalSuccess] = useState(false);
+
+
+
+    const patientProfile = async () => {
+
+        const response = await fetch('http://localhost:5000/patient/getDetail',{
+            method : "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "token" : localStorage.getItem("patientJWT")
+            }
+        })
+
+        const detail = await response.json();
+
+        return detail
+    }
 
     const patientLogin = async (patientDetails)=>{
 
@@ -22,6 +44,7 @@ const ContextProps = (props) => {
         if(details.msg === "Enter valid credtetial!"){
             return {success: false,msg: details.msg};
         }else if(details.msg === "Login Success"){
+            setPatientSuccess(true);
             localStorage.setItem('patientJWT',details.token);
             return {success: true,msg: details.msg};
         }
@@ -44,6 +67,7 @@ const ContextProps = (props) => {
         if(details.msg === "Enter the valid cretendials." || details.msg === "Your details are not verified yet!!"){
             return {success: false,msg: details.msg};
         }else if(details.msg === "Login Success!"){
+            setHospitalSuccess(true);
             localStorage.setItem('hospitalJWT',details.token);
             return {success: true,msg: details.msg};
         }
@@ -119,6 +143,8 @@ const ContextProps = (props) => {
         const detail = await response.json();
 
         console.log(detail);
+
+        setDoctorSuccess(true);
     }
 
     const doctorSignup = async (doctorDetail) => {
@@ -158,7 +184,7 @@ const ContextProps = (props) => {
     }
 
     return (
-        <ContextAPI.Provider value={{hospitalLogin,patientLogin, patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals}} >
+        <ContextAPI.Provider value={{hospitalLogin,patientLogin, patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,patientProfile,patientSuccess,doctorSuccess,hospitalSuccess}} >
         {props.children}
         </ContextAPI.Provider>
     )

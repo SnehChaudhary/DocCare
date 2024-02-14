@@ -34,7 +34,7 @@ const Hospitalsignup = () => {
       const errors = response.msg;
 
       errors.map((error)=>{
-        toast.error(error.msg);
+        return toast.error(error.msg);
       })
     }
   }
