@@ -157,8 +157,21 @@ const ContextProps = (props) => {
         return details;
     }
 
+    const doctorProfile = async()=>{
+        const resposnse = await fetch("http://localhost:5000/doctor/getDetail",{
+            method: "GET",
+            headers: {
+                "token": "eyJhbGciOiJIUzI1NiJ9.MTIzNDU2Nzg5MA.YqW1Nn8F-4Lcm_69OVcEtYN2B1KIqgA1NPs1zwvrANM"
+            }
+        });
+
+        const details = await resposnse.json();
+
+        return details;
+    }
+
     return (
-        <ContextAPI.Provider value={{hospitalLogin,patientLogin, patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals}} >
+        <ContextAPI.Provider value={{hospitalLogin,patientLogin, patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,doctorProfile}} >
         {props.children}
         </ContextAPI.Provider>
     )

@@ -119,7 +119,7 @@ router.get("/getDetail",fetchUser,async (req,res)=>{
 
     const doctorDetails = await Doctor.findOne({id: doctorId});
 
-    res.json(doctorDetails);
+    res.json({doctorDetails: doctorDetails});
 })
 
 module.exports = router;
