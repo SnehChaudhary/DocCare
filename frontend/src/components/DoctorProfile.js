@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import contextAPI from "../context/ContextAPI"
 
-export function DoctorProfile(){
+export default function DoctorProfile(){
     const { doctorProfile } = useContext(contextAPI);
     const [doctorDetail,setDoctorDetail] = useState({});
 
@@ -22,7 +22,6 @@ export function DoctorProfile(){
                     <p className="card-text">Speciality: {doctorDetail.speciality}</p>
                     <p className="card-text">Date of Joining: {doctorDetail.dateOfJoin.slice(0,10)}</p>
                     <p className="card-text">Gender: {doctorDetail.gender}</p>
-                    <a href="#" className="btn btn-primary">Edit Details</a>
                 </div>
             </div>
 }

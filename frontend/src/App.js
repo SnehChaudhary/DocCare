@@ -14,7 +14,8 @@ import Doctorlogin from './components/Doctorlogin';
 import Patientlogin from './components/PatientLogin';
 import ContextProps from './context/ContextProps';
 import PatientProfile from './components/PatientProfile';
-import { DoctorProfile } from './components/DoctorProfile';
+import DoctorProfile from './components/DoctorProfile';
+import HospitalProfile from './components/HospitalProfile';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/home' element={<Home />} />
-          <Route path='/about' element={<PatientProfile />} />
+          <Route path='/about' element={<About />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/signup/hospital' element={<Hospitalsignup />} />
@@ -35,6 +36,9 @@ function App() {
           <Route path='/login/hospital' element={<Hospitallogin />} />
           <Route path='/login/doctor' element={<Doctorlogin />} />
           <Route path='/login/patient' element={<Patientlogin />} />
+          <Route path='patientProfile' element={<PatientProfile />} />
+          <Route path='hospitalProfile' element={<HospitalProfile />} />
+          <Route path='doctorProfile' element={<DoctorProfile />} />
         </Routes>
       </BrowserRouter>
       </ContextProps>

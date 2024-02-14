@@ -3,7 +3,7 @@ import ContextAPI  from "./ContextAPI";
 
 const ContextProps = (props) => {
 
-    const [patientSuccess,setPatientSuccess] = useState(true);
+    const [patientSuccess,setPatientSuccess] = useState(false);
     const [doctorSuccess,setDoctorSuccess] = useState(false);
     const [hospitalSuccess,setHospitalSuccess] = useState(false);
 
@@ -206,8 +206,28 @@ const ContextProps = (props) => {
         return details;
     }
 
+    const patientEdit = async (patient) => {
+        const response = await fetch('http://localhost:5000/patient/updateDetail', {
+            method : "PUT",
+            headers : {
+                "token" : localStorage.getItem("patientJWT"),
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({
+                contact : patient.contact,
+                address : patient.address,
+                height : patient.height,
+                weight : patient.weight
+            })
+        })
+
+        const detail = await response.json();
+
+        console.log(detail);
+    }
+
     return (
-        <ContextAPI.Provider value={{hospitalLogin,patientLogin, patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,patientProfile,doctorProfile,patientSuccess,doctorSuccess,hospitalSuccess}} >
+        <ContextAPI.Provider value={{hospitalLogin,patientLogin, patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,patientProfile,doctorProfile,patientSuccess,doctorSuccess,hospitalSuccess,patientEdit}} >
         {props.children}
         </ContextAPI.Provider>
     )
