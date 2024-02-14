@@ -12,9 +12,8 @@ import Patientsignup from './components/Patientsignup';
 import Hospitallogin from './components/HospitalLogin';
 import Doctorlogin from './components/Doctorlogin';
 import Patientlogin from './components/PatientLogin';
+import HospitalProfile from './components/HospitalProfile';
 import ContextProps from './context/ContextProps';
-import PatientProfile from './components/PatientProfile';
-import { DoctorProfile } from './components/DoctorProfile';
 
 function App() {
   return (
@@ -26,7 +25,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/home' element={<Home />} />
-          <Route path='/about' element={<PatientProfile />} />
+          <Route path='/about' element={<HospitalProfile />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/signup/hospital' element={<Hospitalsignup />} />

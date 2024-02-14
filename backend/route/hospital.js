@@ -80,7 +80,7 @@ router.get('/alldoctor',fetchUser,async (req,res)=>{
 
     //console.log(hospital);
 
-   const doctors = await Doctor.find({hospital: hospital._id});
+    const doctors = await Doctor.find({hospital: hospital._id});
 
     res.json({doctors});
 })

@@ -69,7 +69,7 @@ router.post('/signin', [
 
     if(!doctor.verified)
     {
-        return res.json({msg : "Enter valid credentials v !!"});
+        return res.json({msg : "Enter valid credentials !!"});
     }
 
     if(!bcryptjs.compare(doctor.password, password))
@@ -79,7 +79,7 @@ router.post('/signin', [
 
     const token = jwt.sign(id, SECRET_KEY);
 
-    res.json({token : token});
+    res.json({msg:"Login Success",token : token});
 })
 
 router.get('/allrecord',fetchUser,[

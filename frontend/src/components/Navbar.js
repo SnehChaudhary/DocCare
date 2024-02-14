@@ -6,10 +6,24 @@ const Navbar = () => {
 
   const context = useContext(contextAPI);
 
-  const {hospitalSuccess, doctorSuccess, patientSuccess} = context;
+  const {setLogin} = context;
 
-  const ivsbl = (hospitalSuccess===true || doctorSuccess===true || patientSuccess===true) ? '' : 'd-none';
-  const vsbl = (hospitalSuccess===true || doctorSuccess===true || patientSuccess===true) ? 'd-none' : '';
+  let ivsbl = (setLogin()) ? '' : 'd-none';
+  let vsbl = (setLogin()) ? 'd-none' : '';
+
+  const logout = ()=>{
+    if(localStorage.getItem("patientJWT")!==null){
+      localStorage.removeItem("patientJWT");
+    }
+
+    if(localStorage.getItem("doctorJWT")!==null){
+      localStorage.removeItem("doctorJWT");
+    }
+
+    if(localStorage.getItem("hospitalJWT")!==null){
+      localStorage.removeItem("hospitalJWT");
+    }
+  }
 
   return (
     <div>
@@ -52,7 +66,7 @@ const Navbar = () => {
               <li><a className={`${vsbl} dropdown-item`} href="#">Signup</a></li>
               <li><a className={`${ivsbl} dropdown-item`} href="#">Profile</a></li>
               <li><a className={`${ivsbl} dropdown-item`} href="#">Documents</a></li>
-              <li><a className={`${ivsbl} dropdown-item`} href="#">Logout</a></li>
+              <li><a className={`${ivsbl} dropdown-item`} href="#" onClick={logout}>Logout</a></li>
             </ul>
           </div>
             {/* <form className={`d-flex`} role="search">

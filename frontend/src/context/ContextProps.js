@@ -3,12 +3,50 @@ import ContextAPI  from "./ContextAPI";
 
 const ContextProps = (props) => {
 
-    const [patientSuccess,setPatientSuccess] = useState(true);
+    const [patientSuccess,setPatientSuccess] = useState(false);
     const [doctorSuccess,setDoctorSuccess] = useState(false);
     const [hospitalSuccess,setHospitalSuccess] = useState(false);
 
+    
+    const setLogin = () => {
+        if(localStorage.getItem('patientJWT')){
+            setPatientSuccess(true);
+        }else{
+            setPatientSuccess(false);
+        }
+    
+        if(localStorage.getItem('doctorJWT')){
+            setPatientSuccess(true);
+        }else{
+            setPatientSuccess(false);
+        }
+    
+        if(localStorage.getItem('hospitalJWT')){
+            setPatientSuccess(true);
+        }else{
+            setPatientSuccess(false);
+        }
+
+        if(patientSuccess || doctorSuccess || hospitalSuccess ) return true;
+        
+        return false;
+    }
+
     const hospitalProfile = async()=>{
-        const response = await fetch('http://localhost:5000/patient/getDetail',{
+        const response = await fetch('http://localhost:5000/hospital/getDetail',{
+            method : "GET",
+            headers: {
+                "token" : localStorage.getItem("hospitalJWT")
+            }
+        })
+
+        const detail = await response.json();
+        
+        return detail.hospital;
+    }
+
+    const allDoctors = async()=>{
+        const response = await fetch('http://localhost:5000/hospital/alldoctor',{
             method : "GET",
             headers: {
                 "token" : localStorage.getItem("hospitalJWT")
@@ -150,11 +188,14 @@ const ContextProps = (props) => {
             })
         });
 
-        const detail = await response.json();
+        const details = await response.json();
 
-        console.log(detail);
-
-        setDoctorSuccess(true);
+        if(details.msg === "Enter valid credtetials !!"){
+            return {success: false,msg: details.msg};
+        }else if(details.msg === "Login Success"){
+            localStorage.setItem('patientJWT',details.token);
+            return {success: true,msg: details.msg};
+        }
     }
 
     const doctorSignup = async (doctorDetail) => {
@@ -197,7 +238,7 @@ const ContextProps = (props) => {
         const resposnse = await fetch("http://localhost:5000/doctor/getDetail",{
             method: "GET",
             headers: {
-                "token": "eyJhbGciOiJIUzI1NiJ9.MTIzNDU2Nzg5MA.YqW1Nn8F-4Lcm_69OVcEtYN2B1KIqgA1NPs1zwvrANM"
+                "token": localStorage.getItem("doctorJWT")
             }
         });
 
@@ -207,7 +248,7 @@ const ContextProps = (props) => {
     }
 
     return (
-        <ContextAPI.Provider value={{hospitalLogin,patientLogin, patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,patientProfile,doctorProfile,patientSuccess,doctorSuccess,hospitalSuccess}} >
+        <ContextAPI.Provider value={{setLogin,hospitalLogin,patientLogin,patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,patientProfile,doctorProfile,hospitalProfile,patientSuccess,doctorSuccess,hospitalSuccess,allDoctors}} >
         {props.children}
         </ContextAPI.Provider>
     )
