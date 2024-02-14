@@ -25,7 +25,7 @@ const Doctorlogin = () => {
       <form>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">Doctor ID</label>
-          <input type="email" onChange={onchange} style={{width: "50%"}} className="form-control" name='id' value={doctorDetail.id} id="id" aria-describedby="emailHelp" />
+          <input type="text" onChange={onchange} style={{width: "50%"}} className="form-control" name='id' value={doctorDetail.id} id="id" aria-describedby="emailHelp" />
           </div>
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
