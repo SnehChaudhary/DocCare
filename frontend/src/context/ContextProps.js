@@ -7,21 +7,31 @@ const ContextProps = (props) => {
     const [doctorSuccess,setDoctorSuccess] = useState(false);
     const [hospitalSuccess,setHospitalSuccess] = useState(false);
 
+    const hospitalProfile = async()=>{
+        const response = await fetch('http://localhost:5000/patient/getDetail',{
+            method : "GET",
+            headers: {
+                "token" : localStorage.getItem("hospitalJWT")
+            }
+        })
 
+        const detail = await response.json();
+        
+        return detail;
+    }
 
     const patientProfile = async () => {
 
         const response = await fetch('http://localhost:5000/patient/getDetail',{
             method : "GET",
             headers: {
-                "Content-Type": "application/json",
                 "token" : localStorage.getItem("patientJWT")
             }
         })
 
         const detail = await response.json();
 
-        return detail
+        return detail;
     }
 
     const patientLogin = async (patientDetails)=>{
