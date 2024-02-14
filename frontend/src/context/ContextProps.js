@@ -197,11 +197,7 @@ const ContextProps = (props) => {
     }
 
     return (
-<<<<<<< HEAD
-        <ContextAPI.Provider value={{hospitalLogin,patientLogin, patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,doctorProfile}} >
-=======
-        <ContextAPI.Provider value={{hospitalLogin,patientLogin, patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,patientProfile,patientSuccess,doctorSuccess,hospitalSuccess}} >
->>>>>>> c5360393ca0ff3f3b002995501a66279689205e9
+        <ContextAPI.Provider value={{hospitalLogin,patientLogin, patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,patientProfile,doctorProfile,patientSuccess,doctorSuccess,hospitalSuccess}} >
         {props.children}
         </ContextAPI.Provider>
     )
