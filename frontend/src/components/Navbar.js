@@ -8,7 +8,8 @@ const Navbar = () => {
 
   const {hospitalSuccess, doctorSuccess, patientSuccess} = context;
 
-  const vsbl = (hospitalSuccess===true || doctorSuccess===true || patientSuccess===true) ? 'invisible' : 'visible';
+  const ivsbl = (hospitalSuccess===true || doctorSuccess===true || patientSuccess===true) ? '' : 'd-none';
+  const vsbl = (hospitalSuccess===true || doctorSuccess===true || patientSuccess===true) ? 'd-none' : '';
 
   return (
     <div>
@@ -41,10 +42,23 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            <form className={`d-flex`} role="search">
+
+            <div className="dropdown d-flex">
+            <button className="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {vsbl==='d-none' ? 'Name' : 'Login'}
+            </button>
+            <ul className="dropdown-menu">
+              <li><a className={`${vsbl} dropdown-item`} href="#">Login</a></li>
+              <li><a className={`${vsbl} dropdown-item`} href="#">Signup</a></li>
+              <li><a className={`${ivsbl} dropdown-item`} href="#">Profile</a></li>
+              <li><a className={`${ivsbl} dropdown-item`} href="#">Documents</a></li>
+              <li><a className={`${ivsbl} dropdown-item`} href="#">Logout</a></li>
+            </ul>
+          </div>
+            {/* <form className={`d-flex`} role="search">
               <Link role="button" type="button" className={`${vsbl} btn btn-primary mx-1`} to="/signup">Signup</Link>
               <Link role="button" type="button" className={`btn btn-primary mx-1`} to="/login">{(hospitalSuccess===true || doctorSuccess===true || patientSuccess===true) ? 'Logout' : 'Login'}</Link>
-            </form>
+            </form> */}
             {/* <form className={`${ivsbl} d-flex`} role="search">
               <Link role="button" type="button" className="btn btn-primary mx-1" to="/logout">Logout</Link>
             </form> */}

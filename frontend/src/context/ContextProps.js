@@ -3,7 +3,7 @@ import ContextAPI  from "./ContextAPI";
 
 const ContextProps = (props) => {
 
-    const [patientSuccess,setPatientSuccess] = useState(false);
+    const [patientSuccess,setPatientSuccess] = useState(true);
     const [doctorSuccess,setDoctorSuccess] = useState(false);
     const [hospitalSuccess,setHospitalSuccess] = useState(false);
 
