@@ -6,8 +6,6 @@ const Navbar = () => {
 
   const context = useContext(contextAPI);
 
-  const {hospitalSuccess, doctorSuccess, patientSuccess} = context;
-
   let ivsbl1 = (localStorage.getItem("patientJWT")!==null) ? '' : 'd-none';
   let ivsbl2 = (localStorage.getItem("doctorJWT")!==null) ? '' : 'd-none';
   let ivsbl3 = (localStorage.getItem("hospitalJWT")!==null) ? '' : 'd-none';

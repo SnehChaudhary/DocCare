@@ -16,6 +16,7 @@ import HospitalProfile from './components/HospitalProfile';
 import ContextProps from './context/ContextProps';
 import PatientProfile from './components/PatientProfile';
 import DoctorProfile from './components/DoctorProfile';
+import BookAppointment from './components/BookAppointment';
 
 function App() {
   return (
@@ -36,9 +37,10 @@ function App() {
           <Route path='/login/hospital' element={<Hospitallogin />} />
           <Route path='/login/doctor' element={<Doctorlogin />} />
           <Route path='/login/patient' element={<Patientlogin />} />
-          <Route path='patientProfile' element={<PatientProfile />} />
-          <Route path='hospitalProfile' element={<HospitalProfile />} />
-          <Route path='doctorProfile' element={<DoctorProfile />} />
+          <Route path='/patientProfile' element={<PatientProfile />} />
+          <Route path='/hospitalProfile' element={<HospitalProfile />} />
+          <Route path='/doctorProfile' element={<DoctorProfile />} />
+          <Route path="/appointment" element={<BookAppointment />} />
         </Routes>
       </BrowserRouter>
       </ContextProps>
