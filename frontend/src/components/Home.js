@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react'
+import React, { useContext, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import contextAPI from '../context/ContextAPI';
 import PlusIcon from '@mui/icons-material/Add';
@@ -19,7 +19,7 @@ const Home = () => {
       <h1 className='container'>Hospitals</h1>
       <div className='row'>
         {hospitals.map((hospital,index)=>{
-          return <Link to="/" className='my-2 col-md-4' key={index}><CreateHospitalCard hospital={hospital}/></Link>
+          return <CreateHospitalCard hospital={hospital}/>
         })}
       </div>
     </div>
@@ -27,9 +27,17 @@ const Home = () => {
 }
 
 function CreateHospitalCard(props){
+
   const hospital = props.hospital;
+  const {setHospital} = useContext(contextAPI);
+  const refButton = useRef(null);
+
+  const handleClick = ()=>{
+    setHospital(hospital);
+    refButton.current.click();
+  }
   const url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnGZWTF4dIu8uBZzgjwWRKJJ4DisphDHEwT2KhLNxBAA&s";
-  return (<div className="card" >
+  return (<div className='card my-2 col-md-4' key={hospital._id}>
     <img className="card-img-top" src={url} alt="Card image cap" />
 
     <div className='row container'>
@@ -39,8 +47,9 @@ function CreateHospitalCard(props){
         <p className="card-text">{hospital.contact}</p>
       </div>
 
-      <div className='col-md-4'><PlusIcon className='border rounded-circle bg-primary text-white' style={{width: "50px",height: "50px",margin:"20px 0px 10px 20px"}}/> Appointment </div>
-
+      <div className='col-md-4'><PlusIcon onClick={handleClick} className='border rounded-circle bg-primary text-white' style={{width: "50px",height: "50px",margin:"20px 0px 10px 20px"}}/> Appointment </div>
+      <Link className='d-none' type='button' to="/appointment" ref={refButton}>Book Appointment</Link>
+  
     </div>
   </div>);
 }

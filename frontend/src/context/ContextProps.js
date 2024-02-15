@@ -2,35 +2,7 @@ import { useState } from "react";
 import ContextAPI  from "./ContextAPI";
 
 const ContextProps = (props) => {
-
-    const [patientSuccess,setPatientSuccess] = useState(false);
-    const [doctorSuccess,setDoctorSuccess] = useState(false);
-    const [hospitalSuccess,setHospitalSuccess] = useState(false);
-
-    
-    const setLogin = () => {
-        if(localStorage.getItem('patientJWT')){
-            setPatientSuccess(true);
-        }else{
-            setPatientSuccess(false);
-        }
-    
-        if(localStorage.getItem('doctorJWT')){
-            setPatientSuccess(true);
-        }else{
-            setPatientSuccess(false);
-        }
-    
-        if(localStorage.getItem('hospitalJWT')){
-            setPatientSuccess(true);
-        }else{
-            setPatientSuccess(false);
-        }
-
-        if(patientSuccess || doctorSuccess || hospitalSuccess ) return true;
-        
-        return false;
-    }
+    const [hospital,setHospital] = useState({});
 
     const hospitalProfile = async()=>{
         const response = await fetch('http://localhost:5000/hospital/getDetail',{
@@ -56,6 +28,22 @@ const ContextProps = (props) => {
         const detail = await response.json();
         
         return detail;
+    }
+
+    const doctorAll = async (hospitalId) => {
+        const response = await fetch('http://localhost:5000/hospital/alldoctor',{
+            method : "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "hospitalId": hospitalId 
+            })
+        })
+
+        const details = await response.json();
+
+        return details;
     }
 
     const patientProfile = async () => {
@@ -92,7 +80,6 @@ const ContextProps = (props) => {
         if(details.msg === "Enter valid credtetial!"){
             return {success: false,msg: details.msg};
         }else if(details.msg === "Login Success"){
-            setPatientSuccess(true);
             localStorage.setItem('patientJWT',details.token);
             return {success: true,msg: details.msg};
         }
@@ -115,7 +102,6 @@ const ContextProps = (props) => {
         if(details.msg === "Enter the valid cretendials." || details.msg === "Your details are not verified yet!!"){
             return {success: false,msg: details.msg};
         }else if(details.msg === "Login Success!"){
-            setHospitalSuccess(true);
             localStorage.setItem('hospitalJWT',details.token);
             return {success: true,msg: details.msg};
         }
@@ -270,7 +256,7 @@ const ContextProps = (props) => {
     }
 
     return (
-        <ContextAPI.Provider value={{hospitalLogin,patientLogin,patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,patientProfile,doctorProfile,hospitalProfile,patientSuccess,doctorSuccess,hospitalSuccess,allDoctors,patientEdit}} >
+        <ContextAPI.Provider value={{hospitalLogin,patientLogin,patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,patientProfile,doctorProfile,hospitalProfile,allDoctors,patientEdit,doctorAll,hospital,setHospital}} >
         {props.children}
         </ContextAPI.Provider>
     )
