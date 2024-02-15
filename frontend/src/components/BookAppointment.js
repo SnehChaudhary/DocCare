@@ -13,11 +13,13 @@ const BookAppointment = () => {
         })
     },[])
 
+    const url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHH7mMDHH0S0oWu5HT4FiCTd900_jix22KWhOj6VDlww&s";
+
     return (
     <div>
-        <div>
+        <div className='container row m-4'>
             <div className="col-md-1"></div>
-                <img className="col-md-2 ml-2" src={hospital.photo} alt="Card image cap"/>
+                <img className="col-md-2 ml-2" src={url} alt="Card image cap"/>
                 
                 <div className="col-md-4"></div>
 
@@ -30,12 +32,14 @@ const BookAppointment = () => {
             </div>
         </div>
 
-      <div className="row container ">
-            {doctorDetails.map((doctor)=>{
-                return <div className="col-md-3 py-2"> 
-                    <CreateDoctorCard key={doctor._id} name={doctor.name} speciality={doctor.speciality} gender={doctor.gender} contact={doctor.contact}/>
-                        </div>
-                })}
+        <div className='container'>
+            <div className="row container ">
+                {doctorDetails.map((doctor)=>{
+                    return <div className="col-md-4 py-2"> 
+                        <CreateDoctorCard key={doctor._id} name={doctor.name} speciality={doctor.speciality} gender={doctor.gender} contact={doctor.contact}/>
+                            </div>
+                    })}
+            </div>
         </div>
     </div>
   )

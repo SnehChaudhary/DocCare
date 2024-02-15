@@ -32,8 +32,8 @@ function CreateHospitalCard(props){
   const {setHospital} = useContext(contextAPI);
   const refButton = useRef(null);
 
-  const handleClick = ()=>{
-    setHospital(hospital);
+  const handleClick = async()=>{
+    await setHospital(hospital);
     refButton.current.click();
   }
   const url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnGZWTF4dIu8uBZzgjwWRKJJ4DisphDHEwT2KhLNxBAA&s";

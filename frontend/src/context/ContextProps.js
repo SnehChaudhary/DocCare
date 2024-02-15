@@ -37,7 +37,7 @@ const ContextProps = (props) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "hospitalId": hospitalId 
+                "hosId": hospitalId 
             })
         })
 
