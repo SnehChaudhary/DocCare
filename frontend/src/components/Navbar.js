@@ -8,23 +8,26 @@ const Navbar = () => {
 
   const {hospitalSuccess, doctorSuccess, patientSuccess} = context;
 
-  const ivsbl1 = (localStorage.getItem("patientJWT")!==null) ? '' : 'd-none';
-  const ivsbl2 = (localStorage.getItem("doctorJWT")!==null) ? '' : 'd-none';
-  const ivsbl3 = (localStorage.getItem("hospitalJWT")!==null) ? '' : 'd-none';
-  const vsbl = (localStorage.getItem("hospitalJWT")!==null || localStorage.getItem("doctorJWT")!==null || localStorage.getItem("patientJWT")!==null) ? 'd-none' : '';
-  const ivsbl = (localStorage.getItem("hospitalJWT")!==null || localStorage.getItem("doctorJWT")!==null || localStorage.getItem("patientJWT")!==null) ? '' : 'd-none';
+  let ivsbl1 = (localStorage.getItem("patientJWT")!==null) ? '' : 'd-none';
+  let ivsbl2 = (localStorage.getItem("doctorJWT")!==null) ? '' : 'd-none';
+  let ivsbl3 = (localStorage.getItem("hospitalJWT")!==null) ? '' : 'd-none';
+  let vsbl = (localStorage.getItem("hospitalJWT")!==null || localStorage.getItem("doctorJWT")!==null || localStorage.getItem("patientJWT")!==null) ? 'd-none' : '';
+  let ivsbl = (localStorage.getItem("hospitalJWT")!==null || localStorage.getItem("doctorJWT")!==null || localStorage.getItem("patientJWT")!==null) ? '' : 'd-none';
 
   const logout = ()=>{
     if(localStorage.getItem("patientJWT")!==null){
       localStorage.removeItem("patientJWT");
+      ivsbl1 = 'd-none'
     }
 
     if(localStorage.getItem("doctorJWT")!==null){
       localStorage.removeItem("doctorJWT");
+      ivsbl2 = 'd-none'
     }
 
     if(localStorage.getItem("hospitalJWT")!==null){
       localStorage.removeItem("hospitalJWT");
+      ivsbl3 = 'd-none'
     }
   }
 
