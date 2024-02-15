@@ -85,6 +85,15 @@ router.get('/alldoctor',fetchUser,async (req,res)=>{
     res.json({doctors});
 })
 
+router.post('/alldoctor', async (req,res)=>{
+
+    const {hosId} = req.body;
+
+    const doctors = await Doctor.find({hospital : hosId});
+
+    res.json({doctors});
+})
+
 router.put('/verify', fetchUser, async (req, res)=> {
     const {secKey} = req.body;
 
