@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react'
 import contextAPI from '../context/ContextAPI';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Doctorlogin = () => {
 
+  const navigate = useNavigate();
   const context = useContext(contextAPI);
   const {doctorLogin} = context;
   
@@ -15,9 +18,16 @@ const Doctorlogin = () => {
     setDoctorDetail({...doctorDetail, [e.target.name] : e.target.value});
   }
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    doctorLogin(doctorDetail);
+    const response = await doctorLogin(doctorDetail);
+
+    if(response.success){
+      toast.success(response.msg);
+      navigate('/');
+    }else if(!response.success){
+      toast.error(response.msg);
+    }
   }
 
   return (

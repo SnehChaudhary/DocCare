@@ -16,7 +16,6 @@ import HospitalProfile from './components/HospitalProfile';
 import ContextProps from './context/ContextProps';
 import PatientProfile from './components/PatientProfile';
 import DoctorProfile from './components/DoctorProfile';
-import HospitalProfile from './components/HospitalProfile';
 
 function App() {
   return (

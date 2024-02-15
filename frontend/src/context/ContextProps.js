@@ -190,10 +190,12 @@ const ContextProps = (props) => {
 
         const details = await response.json();
 
+        console.log(details);
+
         if(details.msg === "Enter valid credtetials !!"){
             return {success: false,msg: details.msg};
         }else if(details.msg === "Login Success"){
-            localStorage.setItem('patientJWT',details.token);
+            localStorage.setItem('doctorJWT',details.token);
             return {success: true,msg: details.msg};
         }
     }

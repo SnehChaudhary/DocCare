@@ -18,9 +18,9 @@ export default function DoctorProfile(){
                     <p className="card-text">Doctor ID: {doctorDetail.id}</p>
                     <p className="card-text">Contact Number: {doctorDetail.contact}</p>
                     <p className="card-text">Year(s) of Experience: {doctorDetail.experience}</p>
-                    <p className="card-text">Birth Date: {doctorDetail.birthDate.slice(0,10)}</p>
+                    <p className="card-text">Birth Date: {doctorDetail.birthDate}</p>
                     <p className="card-text">Speciality: {doctorDetail.speciality}</p>
-                    <p className="card-text">Date of Joining: {doctorDetail.dateOfJoin.slice(0,10)}</p>
+                    <p className="card-text">Date of Joining: {doctorDetail.dateOfJoin}</p>
                     <p className="card-text">Gender: {doctorDetail.gender}</p>
                 </div>
             </div>
