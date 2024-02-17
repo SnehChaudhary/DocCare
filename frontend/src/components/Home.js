@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import contextAPI from '../context/ContextAPI';
 import PlusIcon from '@mui/icons-material/Add';
@@ -9,7 +9,7 @@ const Home = () => {
 
   const {getAllHospitals} = useContext(contextAPI);
 
-  const getHospitals = useMemo(async()=>{
+  useMemo(async()=>{
     const details = await getAllHospitals();
 
     setHospitals(details.hospitals);
@@ -32,8 +32,8 @@ function CreateHospitalCard(props){
   const {setHospital} = useContext(contextAPI);
   const refButton = useRef(null);
 
-  const handleClick = async()=>{
-    await setHospital(hospital);
+  const handleClick = ()=>{
+    setHospital(hospital);
     refButton.current.click();
   }
   const url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnGZWTF4dIu8uBZzgjwWRKJJ4DisphDHEwT2KhLNxBAA&s";

@@ -35,8 +35,9 @@ const BookAppointment = () => {
         <div className='container'>
             <div className="row container ">
                 {doctorDetails.map((doctor)=>{
-                    return <div className="col-md-4 py-2"> 
-                        <CreateDoctorCard key={doctor._id} name={doctor.name} speciality={doctor.speciality} gender={doctor.gender} contact={doctor.contact}/>
+                    return <div className="col-md-4 py-2">
+                        <CreateDoctorCard key={doctor._id} doctorId={doctor._id} name={doctor.name} speciality={doctor.speciality} gender={doctor.gender} contact={doctor.contact}/>
+
                             </div>
                     })}
             </div>

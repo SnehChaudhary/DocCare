@@ -89,7 +89,7 @@ router.post('/alldoctor', async (req,res)=>{
 
     const {hosId} = req.body;
 
-    const doctors = await Doctor.find({hospital : hosId});
+    const doctors = await Doctor.find({hospital : hosId, verified : true});
 
     res.json({doctors});
 })
@@ -144,7 +144,7 @@ router.get('/getAllAppointment', fetchUser, async (req,res) => {
 })
 
 router.get('/allHospital',async (req,res)=>{
-    const hospitals = await Hospital.find({});
+    const hospitals = await Hospital.find({verified : true});
 
     res.json({hospitals});
 })
