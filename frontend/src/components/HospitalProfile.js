@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react"
 import contextAPI from "../context/ContextAPI"
 import CreateDoctorCard from "./CreateDoctorCard";
+import { useNavigate } from "react-router-dom";
 
 export default function HospitalProfile(){
     const {hospitalProfile,allDoctors} = useContext(contextAPI);
     const [hospitalDetail,setHositalDetail] = useState({});
     const [doctors,setDoctors] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(()=>{
         allDoctors().then((response)=>{
@@ -32,6 +34,8 @@ export default function HospitalProfile(){
                 <p className="card-text"></p>
                 <p className="card-text">Contact Number: {hospitalDetail.contact}</p>
                 <p className="card-text">Address: {hospitalDetail.address}</p>
+                <button className="btn btn-primary" onClick={()=>{navigate('/completedAppointment')}}>All Appointment</button>
+                <button className="btn btn-primary mx-5" onClick={()=>{navigate('/pendingAppointment')}}>Pending Appointment</button>
                 <br />
             </div>
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const Hospital = require('../model/hospital')
 const Doctor = require('../model/doctor')
+const Patient = require('../model/patient')
 const jwt = require("jsonwebtoken");
 const bcryptjs = require('bcryptjs');
 const router = express.Router();
@@ -123,9 +124,33 @@ router.get('/pendingAppointment', fetchUser, async (req,res) => {
 
     const hosId = hospital._id;
 
-    const appointment = await Appointment.find({hospitalId : hosId, status : false});
+    const appointment = await Appointment.find({hospitalId : hosId,status: false});
 
-    res.json({appointment});
+    let details = [];
+
+    let cnt = 0;
+
+    appointment.map(async (appoint)=>{
+
+        const doctorDetail = await Doctor.find({_id: appoint.doctorId});
+
+        const patientDetail = await Patient.find({_id:appoint.patientId});
+
+        const detail = {
+            reqId: appoint._id,
+            date: appoint.date,
+            doctor: doctorDetail,
+            patient: patientDetail
+        }
+
+        details.push(detail);
+
+        cnt++;
+
+        if(cnt == appointment.length){
+            res.json(details);
+        }
+    })
 })
 
 router.get('/getAllAppointment', fetchUser, async (req,res) => {
@@ -140,7 +165,33 @@ router.get('/getAllAppointment', fetchUser, async (req,res) => {
 
     const appointment = await Appointment.find({hospitalId : hosId, status : true});
 
-    res.json({appointment});
+    let details = [];
+
+    let cnt = 0;
+
+    appointment.map(async (appoint)=>{
+
+        const doctorDetail = await Doctor.find({_id: appoint.doctorId});
+
+        const patientDetail = await Patient.find({_id:appoint.patientId});
+
+        const detail = {
+            date: appoint.date,
+            doctor: doctorDetail,
+            patient: patientDetail
+        }
+
+        cnt++;
+
+        details.push(detail);
+
+        if(cnt == appointment.length){
+            console.log(details);
+            res.json(details);
+        }
+    })
+
+    if(appointment.length == 0) res.json({});
 })
 
 router.get('/allHospital',async (req,res)=>{

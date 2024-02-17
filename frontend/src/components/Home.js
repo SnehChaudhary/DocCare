@@ -1,7 +1,8 @@
 import React, { useContext, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import contextAPI from '../context/ContextAPI';
 import PlusIcon from '@mui/icons-material/Add';
+import toast from 'react-hot-toast';
 
 const Home = () => {
 
@@ -32,9 +33,13 @@ function CreateHospitalCard(props){
   const {setHospital} = useContext(contextAPI);
   const refButton = useRef(null);
 
-  const handleClick = async()=>{
-    await setHospital(hospital);
-    refButton.current.click();
+  const handleClick = ()=>{
+    setHospital(hospital);
+    if(localStorage.getItem('patientJWT')){
+      refButton.current.click()
+    }else{
+      toast.error("Need to login as patient!");
+    }
   }
   const url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnGZWTF4dIu8uBZzgjwWRKJJ4DisphDHEwT2KhLNxBAA&s";
   return (<div className='card my-2 col-md-4' key={hospital._id}>

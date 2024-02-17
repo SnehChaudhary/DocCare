@@ -99,11 +99,15 @@ const ContextProps = (props) => {
 
         const details = await response.json();
 
+        console.log(details);
+
         if(details.msg === "Enter the valid cretendials." || details.msg === "Your details are not verified yet!!"){
             return {success: false,msg: details.msg};
         }else if(details.msg === "Login Success!"){
             localStorage.setItem('hospitalJWT',details.token);
             return {success: true,msg: details.msg};
+        }else{
+            return {success: false,msg: "Invalid credentials"};
         }
     }
 
@@ -255,8 +259,71 @@ const ContextProps = (props) => {
         console.log(detail);
     }
 
+    const completedAppointment = async()=>{
+        const response = await fetch('http://localhost:5000/hospital/getAllAppointment', {
+            method : "GET",
+            headers : {
+                "token" : localStorage.getItem("hospitalJWT"),
+            }
+        })
+
+        const details = await response.json();
+        
+        return details;
+    }
+
+    const pendingAppointment = async()=>{
+        const response = await fetch('http://localhost:5000/hospital/pendingAppointment', {
+            method : "GET",
+            headers : {
+                "token" : localStorage.getItem("hospitalJWT"),
+            }
+        })
+
+        const details = await response.json();
+        
+        return details;
+    }
+
+    const acceptAppointment = async (details) => {
+        const response = await fetch('http://localhost:5000/appointment/accept', {
+            method : "PUT",
+            headers : {
+                "token" : localStorage.getItem("hospitalJWT"),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                reqId: details.reqId,
+                date: details.date,
+                time: details.time
+            })
+
+        })
+
+        const detail = await response.json();
+
+        console.log(detail);
+    }
+
+    const rejectAppointment = async (reqId) => {
+        const response = await fetch('http://localhost:5000/appointment/reject', {
+            method : "PUT",
+            headers : {
+                "token" : localStorage.getItem("hospitalJWT"),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                reqId: reqId,
+            })
+        })
+
+        const detail = await response.json();
+
+        console.log(detail);
+    }
+
     return (
-        <ContextAPI.Provider value={{hospitalLogin,patientLogin,patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,patientProfile,doctorProfile,hospitalProfile,allDoctors,patientEdit,doctorAll,hospital,setHospital}} >
+        <ContextAPI.Provider value={{hospitalLogin,patientLogin,patientSignup, doctorLogin, doctorSignup,hospitalSignup,getAllHospitals,patientProfile,doctorProfile,hospitalProfile,allDoctors,patientEdit,doctorAll,hospital,setHospital,completedAppointment,pendingAppointment,rejectAppointment,acceptAppointment}} >
         {props.children}
         </ContextAPI.Provider>
     )

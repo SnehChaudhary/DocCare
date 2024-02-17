@@ -20,7 +20,7 @@ const Hospitallogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await hospitalLogin(hospitalDetail);
+    const response = await hospitalLogin(hospitalDetail)
 
     if(response.success){
       toast.success(response.msg);
