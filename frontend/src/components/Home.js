@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import contextAPI from '../context/ContextAPI';
 import PlusIcon from '@mui/icons-material/Add';
@@ -10,7 +10,7 @@ const Home = () => {
 
   const {getAllHospitals} = useContext(contextAPI);
 
-  const getHospitals = useMemo(async()=>{
+  useMemo(async()=>{
     const details = await getAllHospitals();
 
     setHospitals(details.hospitals);
